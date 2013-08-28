@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# OpenVPN pki initialization
+
+if [ ! -f /var/lib/nethserver/certs/serial ]; then
+    echo 01 > /var/lib/nethserver/certs/serial
+fi
+if [ ! -f /var/lib/nethserver/certs/crlnumber ]; then
+    echo 01 > /var/lib/nethserver/certs/crlnumber
+fi
+if [ ! -f /var/lib/nethserver/certs/certindex.attr ]; then
+    touch /var/lib/nethserver/certs/certindex.attr
+fi
+if [ ! -f /var/lib/nethserver/certs/certindex ]; then
+    touch /var/lib/nethserver/certs/certindex
+fi
+if [ ! -f /var/lib/nethserver/certs/dh1024.pem ]; then
+    /usr/bin/openssl dhparam -out /var/lib/nethserver/certs/dh1024.pem 1024 2> /dev/null
+fi
+if [ ! -f /var/lib/nethserver/certs/crl.pem ]; then
+     /usr/bin/openssl ca -gencrl -out /var/lib/nethserver/certs/crl.pem -config /var/lib/nethserver/certs/ca.cnf
+fi

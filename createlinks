@@ -31,4 +31,7 @@ my $event = "nethserver-vpn-update";
 
 event_actions($event, 
     'initialize-default-databases' => '00',
+    'nethserver-vpn-conf' => '20',
 );
+
+templates2events("/etc/sudoers",  $event);
