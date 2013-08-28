@@ -4,7 +4,7 @@
 
 $L['Certificates_Title'] = 'Certificates';
 $L['CN_label'] = 'Name';
-$L['Create_label'] = 'Crete';
+$L['Create_label'] = 'Create';
 $L['Expiration_label'] = 'Expiration';
 $L['Revocation_label'] = 'Revocation';
 $L['Revoke_Header'] = 'Certificate revocation';
