@@ -67,6 +67,9 @@ if ( ! -r $crtFile ) {
     die("Could not read $crtFile\n");
 }
 
+if ( -f $crtOut ) {
+    die("A certificate named $commonName already exists!\n");
+}
 
 my $configDb = esmith::ConfigDB->open_ro() || die("Could not open ConfigDB");
 my %conf = $configDb->as_hash();
@@ -96,9 +99,9 @@ open(FH, '|-', join(' ', '/usr/bin/openssl',
 		    '-days', $certificateDuration,
 		    '-utf8',
 		    '-new',
-            '-nodes',
+       		    '-nodes',
 		    '-keyout', $keyOut,
-            '-out', $csrOut
+	            '-out', $csrOut
 		    )
     ) || die("Could not connect to openssl: $!\n");
 
@@ -116,11 +119,13 @@ foreach (
     print FH ($_ . "\n");
 }
 
-$errors += close(FH);
+close(FH) or die("Can't create CSR for $commonName certificate!\n");
 
 # Generate signed certificate
-$errors += system("/usr/bin/openssl ca  -notext  -in $csrOut -out $crtOut -days $certificateDuration -batch -config $outputDir/ca.cnf");
+$errors += system("/usr/bin/openssl ca -notext  -in $csrOut -out $crtOut -days $certificateDuration -batch -config $outputDir/ca.cnf");
 
-
+my $gid = getgrnam('admin');
+chown(0,$gid,$keyOut);
+chmod(0640,$keyOut);
 
 exit (1 ? $errors > 0 : 0);
