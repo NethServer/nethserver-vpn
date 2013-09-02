@@ -36,7 +36,7 @@ class Create extends \Nethgui\Controller\Table\AbstractAction
     public function initialize()
     {
         parent::initialize();
-        $this->declareParameter('CN', Validate::ANYTHING, NULL);
+        $this->declareParameter('CN', Validate::USERNAME, NULL);
     }
 
 
