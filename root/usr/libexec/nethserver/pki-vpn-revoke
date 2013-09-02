@@ -71,6 +71,10 @@ if ( ! -r $crtFile ) {
     die("Could not read $crtFile\n");
 }
 
+my $ret = system("/usr/bin/openssl verify -CAfile $crtFile -crl_check -CRLfile $outputDir/crl.pem $crtOut 2>1 | /bin/grep -q revoked");
+if ($ret == 0) {
+    die("Certificate $commonName already revoked!\n");
+}
 
 # Revoke certificate
 $errors += system("/usr/bin/openssl ca -revoke  $crtOut  -config $outputDir/ca.cnf");
