@@ -92,6 +92,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             $this->getLog()->error(sprintf('%s: file_put_contents failed to write data to %s', __CLASS__, $fileName . '.crt'));
             return FALSE;
         }
+        chmod($fileName, 0640);
 
         return TRUE;
     }
