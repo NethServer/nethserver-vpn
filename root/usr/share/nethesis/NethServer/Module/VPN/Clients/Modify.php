@@ -30,6 +30,7 @@ use Nethgui\Controller\Table\Modify as Table;
  */
 class Modify extends \Nethgui\Controller\Table\Modify
 {
+    const CRT_PATH = "/var/lib/nethserver/certs/clients/";
 
     public function initialize()
     {
@@ -45,13 +46,16 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('Mode', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Password', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Psk', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
-            array('Crt', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('RemoteHost', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
             array('RemotePort', $portRangeValidator, \Nethgui\Controller\Table\Modify::FIELD),
             array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('VPNType', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
             array('AuthMode', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
         );
+        
+        $this->declareParameter('Crt', Validate::ANYTHING, $this->getPlatform()->getMapAdapter(
+                array($this, 'readCrtFile'), array($this, 'writeCrtFile'), array()
+            ));
 
         $this->setSchema($parameterSchema);
         $this->setDefaultValue('Mode', 'routed');
@@ -60,6 +64,38 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         parent::initialize();
     }
+
+    public function readCrtFile()
+    {
+        if (!isset($this->parameters['name'])) {
+            return '';
+        }
+        $fileName = self::CRT_PATH . $this->parameters['name'] . '.pem';
+        $value = $this->getPhpWrapper()->file_get_contents($fileName);
+
+        if ($value === FALSE) {
+            $value = '';
+        }
+
+        return trim($value);
+    }
+
+
+    public function writeCrtFile($value)
+    {
+        $fileName = self::CRT_PATH . $this->parameters['name'] . '.pem';
+
+        // Prepare the RAW value
+        $valueRaw = trim($value) . "\n";
+        $retvalRaw = $this->getPhpWrapper()->file_put_contents($fileName, $valueRaw);
+        if ($retvalRaw === FALSE) {
+            $this->getLog()->error(sprintf('%s: file_put_contents failed to write data to %s', __CLASS__, $fileName . '.crt'));
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
 
     public function prepareView(\Nethgui\View\ViewInterface $view)
     {
