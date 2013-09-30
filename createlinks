@@ -35,3 +35,34 @@ event_actions($event,
 );
 
 templates2events("/etc/sudoers",  $event);
+
+#--------------------------------------------------
+# actions for nethserver-vpn-create event
+#--------------------------------------------------
+
+$event = "nethserver-vpn-create";
+
+event_actions($event,
+    'firewall-adjust' => '80',
+);
+
+#--------------------------------------------------
+# actions for nethserver-vpn-update event
+#--------------------------------------------------
+
+$event = "nethserver-vpn-update";
+
+event_actions($event,
+    'firewall-adjust' => '80',
+);
+
+#--------------------------------------------------
+# actions for nethserver-vpn-delete event
+#--------------------------------------------------
+
+$event = "nethserver-vpn-delete";
+
+event_actions($event,
+    'firewall-adjust' => '80',
+);
+
