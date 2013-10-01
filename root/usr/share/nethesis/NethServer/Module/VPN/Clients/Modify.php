@@ -45,8 +45,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('name', Validate::USERNAME, \Nethgui\Controller\Table\Modify::KEY),
             array('Mode', $this->createValidator()->memberOf(array('routed','bridged')), \Nethgui\Controller\Table\Modify::FIELD),
             array('Password', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
-            array('Psk', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
-            array('RemoteHost', Validate::HOSTADDRESS, \Nethgui\Controller\Table\Modify::FIELD), //TODO
+            array('RemoteHost', Validate::HOSTADDRESS, \Nethgui\Controller\Table\Modify::FIELD),
             array('RemotePort', $portRangeValidator, \Nethgui\Controller\Table\Modify::FIELD),
             array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Compression', Validate::SERVICESTATUS, \Nethgui\Controller\Table\Modify::FIELD),
@@ -57,6 +56,9 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->declareParameter('Crt', Validate::ANYTHING, $this->getPlatform()->getMapAdapter(
                 array($this, 'readCrtFile'), array($this, 'writeCrtFile'), array()
             ));
+        $this->declareParameter('Psk', Validate::ANYTHING, $this->getPlatform()->getMapAdapter(
+                array($this, 'readPskFile'), array($this, 'writePskFile'), array()
+            ));
 
         $this->setSchema($parameterSchema);
         $this->setDefaultValue('Mode', 'routed');
@@ -66,12 +68,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
         parent::initialize();
     }
 
-    public function readCrtFile()
-    {
-        if (!isset($this->parameters['name'])) {
-            return '';
-        }
-        $fileName = self::CRT_PATH . $this->parameters['name'] . '.pem';
+    private function readFile($fileName) {
         $value = $this->getPhpWrapper()->file_get_contents($fileName);
 
         if ($value === FALSE) {
@@ -80,22 +77,46 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         return trim($value);
     }
-
-
-    public function writeCrtFile($value)
-    {
-        $fileName = self::CRT_PATH . $this->parameters['name'] . '.pem';
-
+    
+    private function writeFile($fileName, $value) {
         // Prepare the RAW value
         $valueRaw = trim($value) . "\n";
         $retvalRaw = $this->getPhpWrapper()->file_put_contents($fileName, $valueRaw);
         if ($retvalRaw === FALSE) {
-            $this->getLog()->error(sprintf('%s: file_put_contents failed to write data to %s', __CLASS__, $fileName . '.crt'));
+            $this->getLog()->error(sprintf('%s: file_put_contents failed to write data to %s', __CLASS__, $fileName));
             return FALSE;
         }
         chmod($fileName, 0640);
 
         return TRUE;
+    }
+
+    public function readCrtFile()
+    {
+        if (!isset($this->parameters['name'])) {
+            return '';
+        }
+        return $this->readFile(self::CRT_PATH . $this->parameters['name'] . '.pem');
+    }
+
+
+    public function writeCrtFile($value)
+    {
+        return $this->writeFile(self::CRT_PATH . $this->parameters['name'] . '.pem', $value);
+    }
+
+    public function readPskFile()
+    {
+        if (!isset($this->parameters['name'])) {
+            return '';
+        }
+        return $this->readFile(self::CRT_PATH . $this->parameters['name'] . '.key');
+    }
+
+
+    public function writePskFile($value)
+    {
+        return $this->writeFile(self::CRT_PATH . $this->parameters['name'] . '.key', $value);
     }
 
 
