@@ -43,14 +43,15 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         $parameterSchema = array(
             array('name', Validate::USERNAME, \Nethgui\Controller\Table\Modify::KEY),
-            array('Mode', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
+            array('Mode', $this->createValidator()->memberOf(array('routed','bridged')), \Nethgui\Controller\Table\Modify::FIELD),
             array('Password', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Psk', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
-            array('RemoteHost', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
+            array('RemoteHost', Validate::HOSTADDRESS, \Nethgui\Controller\Table\Modify::FIELD), //TODO
             array('RemotePort', $portRangeValidator, \Nethgui\Controller\Table\Modify::FIELD),
             array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
-            array('VPNType', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
-            array('AuthMode', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
+            array('Compression', Validate::SERVICESTATUS, \Nethgui\Controller\Table\Modify::FIELD),
+            array('VPNType', $this->createValidator()->memberOf(array('openvpn','ipsec')), \Nethgui\Controller\Table\Modify::FIELD),
+            array('AuthMode', $this->createValidator()->memberOf(array('certificate','password','psk','password-certificate')), \Nethgui\Controller\Table\Modify::FIELD)
         );
         
         $this->declareParameter('Crt', Validate::ANYTHING, $this->getPlatform()->getMapAdapter(
@@ -124,7 +125,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
     protected function onParametersSaved($changedParameters)
     {
-       $this->getPlatform()->signalEvent(sprintf('nethserver-vpn-%s@post-process', $this->getIdentifier()), array($this->parameters['name']));
+        $this->getPlatform()->signalEvent(sprintf('nethserver-vpn-%s@post-process', $this->getIdentifier()), array($this->parameters['name']));
     }
 
 }

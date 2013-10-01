@@ -24,3 +24,4 @@ $L['Clients_Title'] = 'Client';
 $L['VPNType_ipsec_label'] = 'IPsec';
 $L['VPNType_label'] = 'Type';
 $L['VPNType_openvpn_label'] = 'OpenVPN';
+$L['Compression_label'] = 'Enable LZO compression';

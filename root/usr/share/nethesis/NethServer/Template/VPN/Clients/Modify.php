@@ -14,7 +14,8 @@ echo $view->panel()
     ->insert($view->fieldsetSwitch('VPNType', 'openvpn', $view::FIELDSETSWITCH_EXPANDABLE)
         ->insert($view->textInput('RemoteHost'))
         ->insert($view->textInput('RemotePort'))
-        ->insert($view->selector('Mode')))
+        ->insert($view->selector('Mode'))
+        ->insert($view->checkbox('Compression','enabled')->setAttribute('uncheckedValue', 'disabled')))
     ->insert($view->fieldsetSwitch('VPNType', 'ipsec', $view::FIELDSETSWITCH_EXPANDABLE)
         ->insert($view->textInput('RemoteHost'))));
 
