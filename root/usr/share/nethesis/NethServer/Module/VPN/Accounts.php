@@ -50,6 +50,7 @@ class Accounts extends \Nethgui\Controller\TableController
             ->addTableAction(new \Nethgui\Controller\Table\Help('Help'))
             ->addRowAction(new \NethServer\Module\VPN\Accounts\Modify('update'))
             ->addRowAction(new \NethServer\Module\VPN\Accounts\Modify('delete'))
+            ->addRowAction(new \NethServer\Module\VPN\Accounts\Download('download'))
 
         ;
 
