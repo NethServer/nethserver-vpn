@@ -47,10 +47,10 @@ event_actions($event,
 );
 
 #--------------------------------------------------
-# actions for nethserver-vpn-update event
+# actions for nethserver-vpn-modify event
 #--------------------------------------------------
 
-$event = "nethserver-vpn-update";
+$event = "nethserver-vpn-modify";
 
 event_actions($event,
     'firewall-adjust' => '80',
