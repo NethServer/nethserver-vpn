@@ -147,7 +147,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
     protected function onParametersSaved($changedParameters)
     {
-        #$this->exitCode = $this->getPlatform()->signalEvent('firewall-adjust')->getExitCode();
+        $this->exitCode = $this->getPlatform()->signalEvent('nethserver-vpn-save')->getExitCode();
     }
 
 }
