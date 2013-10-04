@@ -4,7 +4,7 @@ $view->requireFlag($view::INSET_DIALOG);
 
 echo $view->header()->setAttribute('template', $T('download-vpn_Header'));
 
-$types = array('ovpn','key','crt','pkcs12','ca');
+$types = array('ovpn','pem','pkcs12','ca');
 echo "<ul>";
 foreach ($types as $type) {
     echo "<li style='margin-top: 5px;'>";

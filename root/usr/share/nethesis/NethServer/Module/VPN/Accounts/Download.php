@@ -50,8 +50,7 @@ class Download extends \Nethgui\Controller\Table\RowAbstractAction
 
         $name = \Nethgui\array_head($this->getRequest()->getPath()); 
         $view['ovpn'] = $view->getModuleUrl('/VPN/Accounts/download/ovpn/' . $name);
-        $view['key'] = $view->getModuleUrl('/VPN/Accounts/download/key/' .  \Nethgui\array_head($this->getRequest()->getPath()));
-        $view['crt'] = $view->getModuleUrl('/VPN/Accounts/download/crt/' .  \Nethgui\array_head($this->getRequest()->getPath()));
+        $view['pem'] = $view->getModuleUrl('/VPN/Accounts/download/pem/' .  \Nethgui\array_head($this->getRequest()->getPath()));
         $view['ca'] = $view->getModuleUrl('/VPN/Accounts/download/ca/' .  \Nethgui\array_head($this->getRequest()->getPath()));
         $view['pkcs12'] = $view->getModuleUrl('/VPN/Accounts/download/pkcs12/' .  \Nethgui\array_head($this->getRequest()->getPath()));
         if ($this->getRequest()->isValidated()) {
@@ -73,14 +72,9 @@ class Download extends \Nethgui\Controller\Table\RowAbstractAction
                     $mime = 'application/x-pem-file';
                     $file = "ca.crt";
                     break;
-                case 'key':
-                    $command = $this->prepareCommand("/bin/cat", array("/var/lib/nethserver/certs/$name.key"));
-                    $file = "$name.key";
-                    $mime = 'application/x-pem-file';
-                    break;
-                case 'crt':
-                    $command = $this->prepareCommand("/bin/cat", array("/var/lib/nethserver/certs/$name.crt"));
-                    $file = "$name.crt";
+                case 'pem':
+                    $command = $this->prepareCommand("/bin/cat", array("/var/lib/nethserver/certs/$name.key","/var/lib/nethserver/certs/$name.crt","/etc/pki/tls/certs/NSRV.crt"));
+                    $file = "$name.pem";
                     $mime = 'application/x-pem-file';
                     break;
                 case 'pkcs12':
