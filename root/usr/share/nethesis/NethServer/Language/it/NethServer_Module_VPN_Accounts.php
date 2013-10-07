@@ -1,0 +1,24 @@
+<?php 
+
+/* NethServer_Module_VPN_VPNAccounts translation, language: it */
+
+$L['bridged_label'] = 'Bridged';
+$L['create_header_label'] = 'Crea un nuvo account';
+$L['Key_label'] = 'Nome';
+$L['name_label'] = 'Nome';
+$L['VPNRemoteNetmask_label'] = 'Netmask remota';
+$L['VPNRemoteNetwork_label'] = 'Rete remota';
+$L['routed_label'] = 'Routed';
+$L['update_header_label'] = 'Modifica account';
+$L['Accounts_Title'] = 'Account';
+$L['AccountType_label'] = 'Tipo accounts';
+$L['AccountType_user_label'] = 'Utente di sistema';
+$L['AccountType_vpn_label'] = 'Solo VPN';
+$L['Expiration_Label'] = 'Scadenza certificato';
+$L['User_label'] = 'Utente';
+$L['download_label'] = 'Download';
+$L['download_ovpn'] = 'Configurazione OpenVPN';
+$L['download_pem'] = 'Certificato, chiave privata e CA (formato PEM)';
+$L['download_ca'] = 'Certificato x509 della CA (formato PEM)';
+$L['download_pkcs12'] = 'Certificato e chiave privata (formato PKCS12)';
+$L['download-vpn_Header'] = 'Download';
