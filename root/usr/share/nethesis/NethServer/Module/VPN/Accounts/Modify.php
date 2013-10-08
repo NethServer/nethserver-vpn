@@ -34,10 +34,10 @@ class Modify extends \Nethgui\Controller\Table\Modify
     {
         $parameterSchema = array(
             array('name', Validate::USERNAME, \Nethgui\Controller\Table\Modify::KEY),
-            array('VPNRemoteNetmask', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), //TODO
-            array('VPNRemoteNetwork', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),  //TODO
-            array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), // used only in UI //TODO
-            array('AccountType', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD) //used only in UI //TODO
+            array('VPNRemoteNetmask', Validate::IPv4_NETMASK, \Nethgui\Controller\Table\Modify::FIELD),
+            array('VPNRemoteNetwork',  Validate::IPv4, \Nethgui\Controller\Table\Modify::FIELD),
+            array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), // used only in UI
+            array('AccountType', $this->createValidator()->memberOf(array('openvpn','ipsec')), \Nethgui\Controller\Table\Modify::FIELD) //used only in UI
         );
 
         $this->setSchema($parameterSchema);
