@@ -33,11 +33,11 @@ class Modify extends \Nethgui\Controller\Table\Modify
     public function initialize()
     {
         $parameterSchema = array(
-            array('name', Validate::USERNAME, \Nethgui\Controller\Table\Modify::KEY),
-            array('VPNRemoteNetmask', Validate::IPv4_NETMASK, \Nethgui\Controller\Table\Modify::FIELD),
-            array('VPNRemoteNetwork',  Validate::IPv4, \Nethgui\Controller\Table\Modify::FIELD),
-            array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD), // used only in UI
-            array('AccountType', $this->createValidator()->memberOf(array('openvpn','ipsec')), \Nethgui\Controller\Table\Modify::FIELD) //used only in UI
+            array('name', $this->createValidator()->orValidator($this->createValidator(Validate::USERNAME), $this->createValidator(Validate::HOSTADDRESS)), \Nethgui\Controller\Table\Modify::KEY),
+            array('VPNRemoteNetmask', Validate::IPv4_NETMASK_OR_EMPTY, \Nethgui\Controller\Table\Modify::FIELD),
+            array('VPNRemoteNetwork',  Validate::IPv4_OR_EMPTY, \Nethgui\Controller\Table\Modify::FIELD),
+            array('User', $this->createValidator()->orValidator($this->createValidator(Validate::USERNAME), $this->createValidator(Validate::EMPTYSTRING)), \Nethgui\Controller\Table\Modify::FIELD), // used only in UI
+            array('AccountType', $this->createValidator()->memberOf(array('user','vpn')), \Nethgui\Controller\Table\Modify::FIELD) //used only in UI
         );
 
         $this->setSchema($parameterSchema);
