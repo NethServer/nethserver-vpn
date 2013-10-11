@@ -21,7 +21,6 @@ namespace NethServer\Module\VPN\Clients;
  */
 
 use Nethgui\System\PlatformInterface as Validate;
-use Nethgui\Controller\Table\Modify as Table;
 
 /**
  * Modify VPN clients (tunnels)
@@ -34,19 +33,12 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
     public function initialize()
     {
-        $portRangeValidator = $this->createValidator()
-            ->orValidator(
-                $this->createValidator()->integer()->greatThan(0)->lessThan(65535),
-                $this->createValidator()->regexp('/^[0-9]+\:[0-9]+$/') #port range, no check on maximum value
-            );
-
-
         $parameterSchema = array(
             array('name', Validate::USERNAME, \Nethgui\Controller\Table\Modify::KEY),
             array('Mode', $this->createValidator()->memberOf(array('routed','bridged')), \Nethgui\Controller\Table\Modify::FIELD),
             array('Password', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('RemoteHost', Validate::HOSTADDRESS, \Nethgui\Controller\Table\Modify::FIELD),
-            array('RemotePort', $portRangeValidator, \Nethgui\Controller\Table\Modify::FIELD),
+            array('RemotePort', Validate::PORTNUMBER, \Nethgui\Controller\Table\Modify::FIELD),
             array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Compression', Validate::SERVICESTATUS, \Nethgui\Controller\Table\Modify::FIELD),
             array('VPNType', $this->createValidator()->memberOf(array('openvpn','ipsec')), \Nethgui\Controller\Table\Modify::FIELD),
@@ -136,13 +128,6 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
 
     }
-
-
-    public function process()
-    {
-        parent::process();
-    }
-
 
     protected function onParametersSaved($changedParameters)
     {

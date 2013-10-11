@@ -1,5 +1,7 @@
 <?php
 
+/* @var $view \Nethgui\Renderer\Xhtml */
+
 if ($view->getModule()->getIdentifier() == 'update') {
     $headerText = 'update_header_label';
 } else {
@@ -16,18 +18,19 @@ if ($view->getModule()->getIdentifier() == 'update') {
 
 echo $view->panel()
     ->insert($name)
-    ->insert($view->fieldset()->setAttribute('template', $T('VPNType_label'))
-    ->insert($view->fieldsetSwitch('VPNType', 'openvpn', $view::FIELDSETSWITCH_EXPANDABLE)
-        ->insert($view->textInput('RemoteHost'))
-        ->insert($view->textInput('RemotePort'))
-        ->insert($view->selector('Mode'))
-        ->insert($view->checkbox('Compression','enabled')->setAttribute('uncheckedValue', 'disabled')))
-    ->insert($view->fieldsetSwitch('VPNType', 'ipsec', $view::FIELDSETSWITCH_EXPANDABLE)
-        ->insert($view->textInput('RemoteHost'))));
+    ->insert($view->hidden('VPNType'))
+    ->insert($view->textInput('RemoteHost'))
+    ->insert($view->textInput('RemotePort'))
+    ->insert($view->checkbox('Compression', 'enabled')->setAttribute('uncheckedValue', 'disabled'))
+    ->insert($view->fieldset()->setAttribute('template', $T('Mode_label'))
+        ->insert($view->radioButton('Mode', 'bridged'))
+        ->insert($view->radioButton('Mode', 'routed'))
+    )
+;
 
 echo $view->fieldset()->setAttribute('template', $T('AuthMode_label'))
     ->insert($view->fieldsetSwitch('AuthMode', 'certificate',$view::FIELDSETSWITCH_EXPANDABLE)
-        ->insert($view->textArea('Crt'))
+        ->insert($view->textArea('Crt', \Nethgui\Renderer\WidgetFactoryInterface::LABEL_NONE)->setAttribute('dimensions', '5x40'))
     )
     ->insert($view->fieldsetSwitch('AuthMode', 'password',$view::FIELDSETSWITCH_EXPANDABLE)
         ->insert($view->textInput('User'))
@@ -36,10 +39,10 @@ echo $view->fieldset()->setAttribute('template', $T('AuthMode_label'))
     ->insert($view->fieldsetSwitch('AuthMode', 'password-certificate',$view::FIELDSETSWITCH_EXPANDABLE)
         ->insert($view->textInput('User'))
         ->insert($view->textInput('Password'))
-        ->insert($view->textArea('Crt'))
+        ->insert($view->textArea('Crt', \Nethgui\Renderer\WidgetFactoryInterface::LABEL_ABOVE)->setAttribute('dimensions', '5x40'))
     )
     ->insert($view->fieldsetSwitch('AuthMode', 'psk',$view::FIELDSETSWITCH_EXPANDABLE)
-        ->insert($view->textArea('Psk'))
+        ->insert($view->textArea('Psk', \Nethgui\Renderer\WidgetFactoryInterface::LABEL_NONE)->setAttribute('dimensions', '5x40'))
     );
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_CANCEL | $view::BUTTON_HELP);
