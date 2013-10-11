@@ -150,4 +150,13 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->exitCode = $this->getPlatform()->signalEvent('nethserver-vpn-save')->getExitCode();
     }
 
+    public function nextPath()
+    {
+        // Workaround for LazyLoaderAdapter to reload table contents after mutation request
+        if($this->getRequest()->isMutation()) {
+            return '/VPN/Accounts/read';
+        }
+        return parent::nextPath();
+    }
+
 }
