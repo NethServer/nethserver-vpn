@@ -65,9 +65,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         $view['UserDatasource'] = $tmp;
 
-
-        $view['AccountType'] = 'user';
-
+        $view['AccountType'] = 'vpn';
     }
 
     private function execCrtCmd($cmd) 
@@ -132,7 +130,8 @@ class Modify extends \Nethgui\Controller\Table\Modify
         }
         
         if ($this->getIdentifier() === 'update' && $this->getRequest()->isMutation()) {
-            if ($this->parameters['AccountType'] === 'user' ) {
+            $type = $this->getPlatform()->getDatabase('accounts')->getType($cn);
+            if ($type === 'user') {
                 $this->updateUser($cn, 'yes', $this->parameters['VPNRemoteNetwork'], $this->parameters['VPNRemoteNetmask']);
             } else {
                 $this->updateVPNAccount($cn, $this->parameters['VPNRemoteNetwork'], $this->parameters['VPNRemoteNetmask']);
@@ -143,11 +142,9 @@ class Modify extends \Nethgui\Controller\Table\Modify
             $this->deleteAccount($cn);
             $this->revokeCert($cn);
         }
-    }
-
-    protected function onParametersSaved($changedParameters)
-    {
-        $this->exitCode = $this->getPlatform()->signalEvent('nethserver-vpn-save')->getExitCode();
+        if($this->getRequest()->isMutation()) {
+            $this->exitCode = $this->getPlatform()->signalEvent('nethserver-vpn-save')->getExitCode();
+        }
     }
 
     public function nextPath()
