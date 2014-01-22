@@ -129,7 +129,7 @@ $errors += system("/usr/bin/openssl ca -notext  -in $csrOut -out $crtOut -days $
 # Generate pkcs12 certificate
 $errors += system("/usr/bin/openssl pkcs12 -export -in $crtOut -inkey $keyOut -certfile $crtFile -name '$commonName' -out $pkcsOut -password pass:$commonName");
 
-my $gid = getgrnam('admin');
+my $gid = getgrnam('adm');
 chown(0,$gid,$keyOut);
 chmod(0640,$keyOut);
 
