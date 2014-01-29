@@ -19,6 +19,7 @@ NethServer vpn configuration
 %setup
 
 %build
+%{makedocs}
 perl createlinks
 
 %install
