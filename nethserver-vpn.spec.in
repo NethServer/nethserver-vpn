@@ -36,6 +36,12 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Wed Feb 05 2014 Davide Principi <davide.principi@nethesis.it> - 1.1.1-1.ns6
+- NethCamp 2014 - Task #2618 [NethServer]
+- Move admin user in LDAP DB - Feature #2492 [NethServer]
+- Dashboard:  OpenVPN status widget - Enhancement #2300 [NethServer]
+- Update all inline help documentation - Task #1780 [NethServer]
+
 * Wed Oct 23 2013 Davide Principi <davide.principi@nethesis.it> - 1.1.0-1.ns6
 - VPN: add support for OpenVPN net2net - Feature #1958 [NethServer]
 - VPN: support IPsec/L2TP - Feature #1957 [NethServer]
