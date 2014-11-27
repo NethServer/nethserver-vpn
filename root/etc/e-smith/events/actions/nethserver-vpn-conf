@@ -20,3 +20,5 @@ fi
 if [ ! -f /var/lib/nethserver/certs/crl.pem ]; then
      /usr/bin/openssl ca -gencrl -out /var/lib/nethserver/certs/crl.pem -config /var/lib/nethserver/certs/ca.cnf
 fi
+
+chmod o+r /var/lib/nethserver/certs/{serial,crlnumber,certindex.attr,certindex,dh1024.pem,crl.pem}
