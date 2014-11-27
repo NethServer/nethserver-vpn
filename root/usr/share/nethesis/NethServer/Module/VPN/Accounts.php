@@ -102,7 +102,7 @@ class Accounts extends \Nethgui\Controller\TableController
         }
 
         // read certificate expiration for certificate associated with each account
-        $lines = file($this->certindex);
+        $lines = $this->getPhpWrapper()->file($this->certindex);
         if ($lines !== FALSE) {
             foreach ($lines as $line) {
                 list($status, $exp_date, $rev_date, $index, $name, $cn) = explode("\t", trim($line, "\n"));
@@ -116,9 +116,6 @@ class Accounts extends \Nethgui\Controller\TableController
         } else {
             $this->getLog()->error("Can't access certificate index file: ".$this->certindex);
         }
-
-
-
 
         return $loader;
     }
