@@ -33,7 +33,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
     public function initialize()
     {
         $parameterSchema = array(
-            array('name', $this->createValidator()->orValidator($this->createValidator(Validate::USERNAME), $this->createValidator(Validate::HOSTADDRESS)), \Nethgui\Controller\Table\Modify::KEY),
+            array('name', $this->createValidator()->orValidator($this->createValidator(Validate::USERNAME), $this->createValidator(Validate::HOSTADDRESS))->platform('vpn-create'), \Nethgui\Controller\Table\Modify::KEY),
             array('VPNRemoteNetmask', Validate::IPv4_NETMASK_OR_EMPTY, \Nethgui\Controller\Table\Modify::FIELD),
             array('VPNRemoteNetwork',  Validate::IPv4_OR_EMPTY, \Nethgui\Controller\Table\Modify::FIELD),
             array('User', $this->createValidator()->orValidator($this->createValidator(Validate::USERNAME), $this->createValidator(Validate::EMPTYSTRING)), \Nethgui\Controller\Table\Modify::FIELD), // used only in UI

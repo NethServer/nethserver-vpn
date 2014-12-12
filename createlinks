@@ -66,3 +66,7 @@ event_actions($event,
     'firewall-adjust' => '80',
 );
 
+# actions for user-create validator
+validator_actions('vpn-create', qw(
+                  uniq-account 20
+));

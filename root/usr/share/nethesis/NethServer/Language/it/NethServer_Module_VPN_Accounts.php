@@ -23,3 +23,4 @@ $L['download_pem'] = 'Certificato, chiave privata e CA (formato PEM)';
 $L['download_ca'] = 'Certificato x509 della CA (formato PEM)';
 $L['download_pkcs12'] = 'Certificato e chiave privata (formato PKCS12)';
 $L['download-vpn_Header'] = 'Download';
+$L['valid_platform,vpn-create,uniq-account,3'] = 'Account già esistente';

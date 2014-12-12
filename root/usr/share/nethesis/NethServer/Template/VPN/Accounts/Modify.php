@@ -3,7 +3,7 @@
 $panel = $view->panel();
 if ($view->getModule()->getIdentifier() == 'update') {
     $headerText = 'update_header_label';
-    $panel->insert($view->textInput('name', $view::STATE_READONLY));
+    $panel->insert($view->textInput('name', $view::STATE_READONLY | $view::STATE_DISABLED));
 } else {
     $headerText = 'create_header_label';
     $panel->insert($view->fieldsetSwitch('AccountType', 'vpn', $view::FIELDSET_EXPANDABLE)
