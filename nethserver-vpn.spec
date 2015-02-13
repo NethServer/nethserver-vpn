@@ -1,7 +1,7 @@
 Summary: NethServer vpn configuration
 Name: nethserver-vpn
-Version: @@VERSION@@
-Release: @@RELEASE@@
+Version: 1.1.4
+Release: 1
 License: GPL
 URL: %{url_prefix}/%{name} 
 Source0: %{name}-%{version}.tar.gz
