@@ -1,6 +1,6 @@
 Summary: NethServer vpn configuration
 Name: nethserver-vpn
-Version: 1.1.4
+Version: 1.1.5
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -36,6 +36,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Wed Mar 11 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.5-1
+- missing vpn certs in configuration backup - Enhancement #3071 [NethServer]
+
 * Fri Dec 12 2014 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.4-1.ns6
 - Creating a vpn user corrupts the system user with the same name - Bug #2974 [NethServer]
 
