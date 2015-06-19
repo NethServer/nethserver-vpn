@@ -8,8 +8,8 @@ if ($view->getModule()->getIdentifier() == 'update') {
     $headerText = 'create_header_label';
     $panel->insert($view->fieldsetSwitch('AccountType', 'vpn', $view::FIELDSET_EXPANDABLE)
             ->insert($view->textInput('name')));
-    $panel->insert($view->fieldsetSwitch('AccountType', 'user',  $view::FIELDSET_EXPANDABLE)
-            ->insert($view->selector('User', $view::SELECTOR_DROPDOWN)));
+//    $panel->insert($view->fieldsetSwitch('AccountType', 'user',  $view::FIELDSET_EXPANDABLE)
+//            ->insert($view->selector('User', $view::SELECTOR_DROPDOWN)));
 
 /*    $panel->insert($view->fieldset()->setAttribute('template', $T('AccountType_label'))
         ->insert($view->fieldsetSwitch('AccountType', 'vpn', $view::FIELDSETSWITCH_EXPANDABLE)
