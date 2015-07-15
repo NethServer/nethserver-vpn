@@ -49,4 +49,7 @@ Client
 The VPN client allows you to connect the server to another VPN server
 in order to create a net2net VPN.  Currently only OpenVPN net2net are supported.
 
+.. raw:: html
+
+   {{{INCLUDE NethServer_Module_VPN_*.html}}}
 
