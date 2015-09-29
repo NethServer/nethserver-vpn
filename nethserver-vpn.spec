@@ -1,6 +1,6 @@
 Summary: NethServer vpn configuration
 Name: nethserver-vpn
-Version: 1.1.6
+Version: 1.1.7
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name} 
@@ -36,6 +36,9 @@ echo "%doc COPYING" >> %{name}-%{version}-filelist
 %defattr(-,root,root)
 
 %changelog
+* Tue Sep 29 2015 Davide Principi <davide.principi@nethesis.it> - 1.1.7-1
+- Make Italian language pack optional - Enhancement #3265 [NethServer]
+
 * Thu Jul 16 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.1.6-1
 - IPsec tunnels (net2net) web interface - Feature #3194 [NethServer]
 
